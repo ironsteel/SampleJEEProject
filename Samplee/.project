@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>SampleeEJB</project>
-		<project>SampleeEJBClient</project>
 		<project>SampleeWeb</project>
 	</projects>
 	<buildSpec>
