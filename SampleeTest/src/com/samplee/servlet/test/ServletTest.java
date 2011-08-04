@@ -47,6 +47,6 @@ public class ServletTest {
 		SampleModel result = webResource.get(SampleModel.class);
 		
 		
-		assertEquals(true, result.equals(obj));
+		assertEquals(obj, result);
 	}
 }

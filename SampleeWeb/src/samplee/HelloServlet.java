@@ -16,21 +16,23 @@ import com.samplee.*;
 @Path("/API")
 public class HelloServlet {
 
+	private SampleeFacade facade;
+	
+	public HelloServlet() { facade = new SampleeFacade(); }
 	// The Java method will process HTTP GET requests
 	@Path("/helloworld")
 	@GET
 	// The Java method will produce content identified by the MIME Media
 	// type "text/plain"
 	@Produces("text/plain")
-	public String getClichedMessage() {
-		// Return some cliched textual content
-		return "hello from servlet";
+	public String getSimpleString() {
+		return facade.createSimpleString("Hello from sevlet");
 	}
 	
 	@Path("/samplemodel")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public SampleModel getSampleModel() {
-		return new SampleModel();
+		return facade.createSampleModel();
 	}
 }
