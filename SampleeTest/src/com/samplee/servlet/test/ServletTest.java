@@ -26,7 +26,6 @@ public class ServletTest {
 	@Test 
 	public void testServletReturnsSampleModel() {
 		Client client = Client.create();
-
 		// Fetch resource form servlet
 		WebResource webResource = client
 				.resource("http://localhost:8080/SampleeWeb/API/samplemodel");
@@ -35,6 +34,19 @@ public class ServletTest {
 		assertEquals(SampleModel.class, result.getClass());
 		
 		// And does the name field contains the correct string value
-		assertEquals("Hello from json", result.getName());
+		assertEquals("Hello from json", result.getName());	
+	}
+	
+	@Test
+	public void testServletReturnsSampleModelUsingEquals() {
+		SampleModel obj = new SampleModel();
+		Client client = Client.create();
+		// Fetch resource form servlet
+		WebResource webResource = client
+				.resource("http://localhost:8080/SampleeWeb/API/samplemodel");
+		SampleModel result = webResource.get(SampleModel.class);
+		
+		
+		assertEquals(true, result.equals(obj));
 	}
 }
