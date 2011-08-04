@@ -3,6 +3,9 @@
 	<name>SampleeTest</name>
 	<comment></comment>
 	<projects>
+		<project>Samplee</project>
+		<project>SampleeEJB</project>
+		<project>SampleeWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
