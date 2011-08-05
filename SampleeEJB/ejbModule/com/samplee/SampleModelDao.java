@@ -16,25 +16,15 @@ public class SampleModelDao {
 	}
 	
 	public SampleModel getSampleModel(Integer id) {
-		
-		if(modelContainer.isEmpty())
-			throw new NotFoundException();
-		
 		return modelContainer.get(id);
 	}
 	
 	public void deleteSampleModel(Integer id) {
-		if(modelContainer.isEmpty()) {
-			throw new NotFoundException();
-		}
 		modelContainer.remove(id);
 	}
 	
 	public void updateSampleModel(SampleModel model) {
 		SampleModel removed = modelContainer.remove(model.getId());
-		if(removed == null) {
-			throw new NotFoundException();
-		}
 		modelContainer.put(model.getId(), model);		
 	}
 }

@@ -1,5 +1,10 @@
 package samplee;
 
+
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -13,8 +18,13 @@ import com.sun.jersey.api.NotFoundException;
 
 @Path("/API")
 public class HelloServlet {
-	private static SampleeFacade facade = new SampleeFacade() ;
+	private SampleeFacade facade;
 	
+	
+	public HelloServlet() throws NamingException {
+		  Context context = new InitialContext();
+		   facade = (SampleeFacade) context.lookup("java:comp/env/ejb/SampleeFacade");
+	}
 	@Path("helloworld")
 	@GET
 	public String getHelloWorld() {

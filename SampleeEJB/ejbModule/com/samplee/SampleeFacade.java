@@ -1,10 +1,9 @@
 package com.samplee;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.ejb.Stateless;
 
-
+@Stateless
 public class SampleeFacade {
 
 	private SampleModelDao sampleModelDao = new SampleModelDao();
