@@ -7,7 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SampleModel {
 	
-	
+	private static int count = 0;
+	private Integer id = count++;
 	private String name;
 	
 	public SampleModel() { 
@@ -20,6 +21,14 @@ public class SampleModel {
 	
 	public void setName(String nameArg) {
 		name = nameArg;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer arg) {
+		id = arg;
 	}
 	
 	@Override
