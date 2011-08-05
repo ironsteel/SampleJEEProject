@@ -11,10 +11,6 @@ import javax.ws.rs.core.MediaType;
 import com.samplee.*;
 import com.sun.jersey.api.NotFoundException;
 
-
-
-
-// The Java class will be hosted at the URI path "/helloworld"
 @Path("/API")
 public class HelloServlet {
 	private static SampleeFacade facade = new SampleeFacade() ;
@@ -26,26 +22,26 @@ public class HelloServlet {
 	}
 	
 	
-	@Path("/insert/{name}")
+	@Path("/samplemodel/new")
 	@POST
-	public void insertSampleModel(@PathParam("name")String name) {
-		facade.insertSampleModel(name);
+	public void insertSampleModel(SampleModel model) {
+		facade.insertSampleModel(model);
 	}
 	
-	@Path("/getmodel/{id}")
+	@Path("/samplemodel/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public SampleModel getSampleModel(@PathParam("id")Integer id) throws NotFoundException {
 		return facade.getSampleModel(id);
 	}
 	
-	@Path("update/{id}/{name}")
+	@Path("samplemodel/update")
 	@PUT
-	public void updateSampleModel(@PathParam("id")Integer id, @PathParam("name")String name) {
-		facade.updateSampleModel(id, name);		
+	public void updateSampleModel(SampleModel model) {
+		facade.updateSampleModel(model);		
 	}
 	
-	@Path("delete/{id}")
+	@Path("samplemodel/{id}")
 	@DELETE
 	public void deleteSampleModel(@PathParam("id")Integer id) {
 		facade.deleteSampleModel(id);

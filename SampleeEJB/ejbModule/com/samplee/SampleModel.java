@@ -7,12 +7,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SampleModel {
 	
-	private static int count = 0;
-	private Integer id = count++;
+	private Integer id ;
 	private String name;
 	
 	public SampleModel() { 
-		name = new String("Hello from json");
+		
 	}
 	
 	public String getName() {
@@ -48,6 +47,10 @@ public class SampleModel {
 		}
 		
 		if(!getName().equals(lhs.getName())) {
+			return false;
+		}
+		
+		if(!getId().equals(lhs.getId())) {
 			return false;
 		}
 		

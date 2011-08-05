@@ -6,31 +6,24 @@ import java.util.Map;
 
 
 public class SampleeFacade {
-	private Map<Integer, SampleModel>  modelContainer;
-	public SampleeFacade() {
-		modelContainer = new HashMap<Integer, SampleModel>();
-	}
-	public String createSimpleString(String arg) {
-		return new String(arg);
-	}
+
+	private SampleModelDao sampleModelDao = new SampleModelDao();
 	
-	public void insertSampleModel(String name) {
-		SampleModel model = new SampleModel();
-		model.setName(name);	
-		modelContainer.put(model.getId(), model);
+	public void insertSampleModel(SampleModel model) {
+		sampleModelDao.insertSampleModel(model);
 	}
 	
 	public SampleModel getSampleModel(Integer id) {
-			return modelContainer.get(id);
+		return sampleModelDao.getSampleModel(id);
 	}
 	
 	public void deleteSampleModel(Integer id) {
-		modelContainer.remove(id);
+		sampleModelDao.deleteSampleModel(id);
 	}
 	
-	public void updateSampleModel(Integer id, final String name) {
-		SampleModel model = modelContainer.get(id);
-		model.setName(name);
+	public void updateSampleModel(SampleModel model) {
+		sampleModelDao.updateSampleModel(model);
 	}
+	
 	
 }

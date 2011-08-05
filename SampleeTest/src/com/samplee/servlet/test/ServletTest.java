@@ -2,74 +2,71 @@ package com.samplee.servlet.test;
 
 import static org.junit.Assert.*;
 
-import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.MediaType;
+
+
 
 
 import com.samplee.*;
 
 import com.sun.jersey.api.client.*;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class ServletTest {
 
-	@Test
-	public void testServletResponse() {
-		Client client = Client.create();
+	private WebResource webResource;
 
-		// Fetch resource form servlet
-		WebResource webResource = client
-				.resource("http://localhost:8080/SampleeWeb/API/helloworld");
-
-		// We are expecting a string containing "hello from servlet"
-		assertEquals("Hello from servlet", webResource.get(String.class));
-	}
-	
-	@Test 
-	public void testServletReturnsSampleModel() {
+	@Before
+	public void setUp() {
 		Client client = Client.create();
-		// Fetch resource form servlet
-		WebResource webResource = client
-				.resource("http://localhost:8080/SampleeWeb/API/samplemodel");
-		SampleModel result = webResource.get(SampleModel.class);
-		// Do we get the expected object
-		assertEquals(SampleModel.class, result.getClass());
-		
-		// And does the name field contains the correct string value
-		assertEquals("Hello from json", result.getName());	
+		webResource = client.resource("http://localhost:8080/SampleeWeb/API/samplemodel");
 	}
-	
-	
-	
+		
 	@Test
-	public void testCRUDOperations() {
-		Client client = Client.create();
-		WebResource webResource = client.resource("http://localhost:8080/SampleeWeb/API/insert/name");
-		webResource.post();
-		
-		webResource = client.resource("http://localhost:8080/SampleeWeb/API/getmodel/0");
-		SampleModel obj = webResource.get(SampleModel.class);
-		
-		webResource = client.resource("http://localhost:8080/SampleeWeb/API/update/0/Rangel");
-		webResource.put();	
-		
-		webResource = client.resource("http://localhost:8080/SampleeWeb/API/getmodel/0");
-		obj = webResource.get(SampleModel.class);
-		
-	}
-	
-	@Test
-	public void testServletReturnsSampleModelUsingEquals() {
+	public void testNewOperation() {
 		SampleModel obj = new SampleModel();
-		obj.setName("Rangel");
-		Client client = Client.create();
-		// Fetch resource form servlet
-		WebResource webResource = client
-				.resource("http://localhost:8080/SampleeWeb/API/getmodel/0");
-		SampleModel result = webResource.get(SampleModel.class);
+		obj.setId(0);
+		obj.setName("Test");
+		webResource.path("new").accept(MediaType.APPLICATION_JSON).post(obj);
 		
+		SampleModel storedObj = webResource.path("0").get(SampleModel.class);	
+		assertEquals(obj, storedObj);
+	}
+	
+	@Test
+	public void testGetSampleModel() {
+		SampleModel obj = new SampleModel();
+		obj.setId(0);
+		obj.setName("Test");
 		
+		SampleModel result = webResource.path("0").get(SampleModel.class);
 		assertEquals(obj, result);
+	}
+	
+	@Test
+	public void testUpdateModel() {
+		SampleModel replacement = new SampleModel();
+		replacement.setName("New Name");
+		replacement.setId(0);
+		webResource.path("update").accept(MediaType.APPLICATION_JSON).put(replacement);
+		
+		SampleModel stored = webResource.path("0").get(SampleModel.class);
+		
+		assertEquals(stored, replacement);
+		
+	}
+	
+	@Test
+	public void testDeleteModel() {
+		webResource.path("0").delete();
+		try {
+			SampleModel stored = webResource.path("0").get(SampleModel.class);
+			fail();
+		} catch (UniformInterfaceException e) {
+		}
+		
 	}
 }
