@@ -1,12 +1,14 @@
 package com.samplee;
 
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class SampleeFacade {
 
-	private SampleModelDao sampleModelDao = new SampleModelDao();
+	@EJB
+	private SampleModelDao sampleModelDao;
 	
 	public void insertSampleModel(SampleModel model) {
 		sampleModelDao.insertSampleModel(model);

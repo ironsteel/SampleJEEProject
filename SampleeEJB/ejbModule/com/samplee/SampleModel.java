@@ -1,13 +1,24 @@
 package com.samplee;
 
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
+@Entity
 @XmlRootElement
-public class SampleModel {
+public class SampleModel implements Serializable {
 	
-	private Integer id ;
+	@Id
+	@Column()
+	@GeneratedValue
+	private Integer id;
+	@Column(name = "name", updatable = true)
 	private String name;
 	
 	public SampleModel() { 
@@ -50,9 +61,7 @@ public class SampleModel {
 			return false;
 		}
 		
-		if(!getId().equals(lhs.getId())) {
-			return false;
-		}
+		
 		
 		return true;
 		

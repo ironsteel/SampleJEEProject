@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import javax.ws.rs.core.MediaType;
 
-
-
-
 import com.samplee.*;
 
 import com.sun.jersey.api.client.*;
