@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="/BAPDomainsModule/EarContent/lib/jersey-json-1.6.jar"/>
 	<classpathentry kind="lib" path="/BAPDomainsModule/EarContent/lib/jsr311-api-1.1.1.jar"/>
 	<classpathentry kind="src" path="/SampleeEJB"/>
+	<classpathentry kind="src" path="/CommonTypesEJB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

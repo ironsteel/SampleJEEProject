@@ -7,17 +7,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
 @XmlRootElement
+@NamedQueries(value = {
+		@NamedQuery(name = SampleModel.GET_SAMPLEMODEL_ALL, query = "SELECT m FROM SampleModel m"),
+		@NamedQuery(name = SampleModel.GET_SAMPLEMODEL_BY_NAME, query = "SELECT m FROM SampleModel m WHERE m.name = :name")
+		})
 public class SampleModel implements Serializable {
+	
+	public static final String GET_SAMPLEMODEL_BY_NAME = "getSampleModelByName";
+	
+	public static final String GET_SAMPLEMODEL_ALL = "getAll";
+	
 	
 	@Id
 	@Column()
 	@GeneratedValue
 	private Integer id;
+	
 	@Column(name = "name", updatable = true)
 	private String name;
 	
@@ -60,9 +72,7 @@ public class SampleModel implements Serializable {
 		if(!getName().equals(lhs.getName())) {
 			return false;
 		}
-		
-		
-		
+
 		return true;
 		
 	}

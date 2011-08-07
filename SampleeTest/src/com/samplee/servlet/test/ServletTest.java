@@ -2,13 +2,17 @@ package com.samplee.servlet.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.ws.rs.core.MediaType;
 
 import com.samplee.*;
 
+import com.sun.jersey.api.NotFoundException;
 import com.sun.jersey.api.client.*;
 
 
+import org.apache.openjpa.persistence.NoResultException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,47 +27,44 @@ public class ServletTest {
 	}
 		
 	@Test
-	public void testNewOperation() {
+	public void testNewOperatation() {
 		SampleModel obj = new SampleModel();
-		obj.setId(0);
 		obj.setName("Test");
 		webResource.path("new").accept(MediaType.APPLICATION_JSON).post(obj);
 		
-		SampleModel storedObj = webResource.path("0").get(SampleModel.class);	
-		assertEquals(obj, storedObj);
+		SampleModel stored =  (SampleModel) webResource.path("Test").get(SampleModel.class);
+		
+		assertEquals(obj, stored);
+		
 	}
 	
+	
 	@Test
-	public void testGetSampleModel() {
-		SampleModel obj = new SampleModel();
-		obj.setId(0);
-		obj.setName("Test");
-		
-		SampleModel result = webResource.path("0").get(SampleModel.class);
-		assertEquals(obj, result);
+	public void testGetSampleModelByName() {
+		SampleModel result = (SampleModel) webResource.path("Test").get(SampleModel.class);
 	}
 	
 	@Test
 	public void testUpdateModel() {
-		SampleModel replacement = new SampleModel();
-		replacement.setName("New Name");
-		replacement.setId(0);
-		webResource.path("update").accept(MediaType.APPLICATION_JSON).put(replacement);
+		SampleModel obj = (SampleModel) webResource.path("Test").get(SampleModel.class);
+		obj.setName("Test1");
+		webResource.path("update").accept(MediaType.APPLICATION_JSON).put(obj);
 		
-		SampleModel stored = webResource.path("0").get(SampleModel.class);
+		SampleModel stored = webResource.path("Test1").get(SampleModel.class);
 		
-		assertEquals(stored, replacement);
+		assertEquals(stored, obj);
 		
 	}
 	
 	@Test
 	public void testDeleteModel() {
-		webResource.path("0").delete();
-		try {
-			SampleModel stored = webResource.path("0").get(SampleModel.class);
-			fail();
-		} catch (UniformInterfaceException e) {
-		}
+		SampleModel result  = webResource.path("Test1").get(SampleModel.class);
 		
+		webResource.path("delete/" + result.getName()).delete();
+	}
+	
+	@Test
+	public void testDeleteAll() {
+		webResource.path("deleteall").delete();
 	}
 }
